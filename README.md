@@ -9,3 +9,4 @@
 - And generate html reports, use command ```pytest --html="/tests/reports/result.html"```,
 - And generate xml reports, use command ```pytest --junitxml="/tests/reports/result.xml"```
 - Using verbose mode on a specific environment (custom) ```pytest --env dev -v```
+- See info on skipped/ xfailed/ xpassed tests ```pytest -rxXs```
