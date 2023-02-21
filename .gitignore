@@ -1,4 +1,2 @@
 #ignore all cache files
 **/__pycache__/*.pyc
-/tests/car/body/__pycache__/test_body.cpython-310-pytest-7.2.1.pyc
-tests/
