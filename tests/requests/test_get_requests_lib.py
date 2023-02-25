@@ -5,31 +5,33 @@ req_url = 'https://www.postman-echo.com/get'
 params  = {'key1':'value1', 'key2':'value2'}
 headers  = {'Content-Type':'application/json'}
 
-@mark.requests_lib
+#GET request examples
+
+@mark.requests_lib_get
 def test_check_status_code():
     res = requests.get(req_url)
     print(f"status code is: {res.status_code}")
     assert res.status_code == 200
     
-@mark.requests_lib
+@mark.requests_lib_get
 def test_response_text():
     res = requests.get(req_url)
     print(f"response body is: {res.text}")
     assert isinstance(res.text, str)
 
-@mark.requests_lib 
+@mark.requests_lib_get 
 def test_send_params_get_url():
     res = requests.get(req_url, params = params)
     print(f"url is: {res.url}")
     assert res.url == f"{req_url}?key1=value1&key2=value2"
 
-@mark.requests_lib
+@mark.requests_lib_get
 def test_check_encoding():
     res = requests.get(req_url)
     print(f"encoding is: {res.encoding}")
     assert res.encoding == 'utf-8'
 
-@mark.requests_lib
+@mark.requests_lib_get
 def test_use_decoder():
     res = requests.get(req_url)
     #the type is <class 'requests.models.Response'>
@@ -40,7 +42,7 @@ def test_use_decoder():
     print(f"decoded: {type(res.text)}")
     assert isinstance(res.json(), dict)
 
-@mark.requests_lib   
+@mark.requests_lib_get   
 def test_send_params_get_url():
     res = requests.get(req_url, headers = headers)
     print(f"headers are: {res.headers}")
