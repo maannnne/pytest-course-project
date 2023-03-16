@@ -2,7 +2,7 @@ class Config:
     def __init__(self, env):
 
         #the environments that are supported
-        SUPPORTED_ENVS = ['localhost', 'vm']
+        SUPPORTED_ENVS = ['prod', 'stage']
 
         #check if the environment is not supported, raise an exception
         if env.lower() not in SUPPORTED_ENVS:
@@ -10,7 +10,7 @@ class Config:
 
         #the dictionary for supported environments
         self.base_url = {
-            'localhost': 'https://localhost:4450', 
-            'vm': 'https://0.0.0.0:4450'
+            'prod': 'https://api.agify.io', 
+            'stage': 'https://api.agify.io'
         }[env]
         
