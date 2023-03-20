@@ -31,7 +31,8 @@ class Base:
         val = response_json[key_name]
         return val
 
-    def check_response_key_value(self, response, key_name, expected_value):
+    def check_response_key_value(self, response, key_json_path, expected_value):
         response_json = response.json()
-        actual_value = response_json[key_name]
+        
+        actual_value = response_json[x]
         assert actual_value == expected_value

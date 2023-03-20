@@ -9,26 +9,38 @@ from jsonpath_ng import jsonpath, parse
 
 post_pet_endpoint = '/pet'
 json_file_path = 'jsons\\new_pet.json'
-# payload = {
-#     "id": 9223372036854284571,
-#     "category": {
-#         "id": 0,
-#         "name": "cat"
-#     },
-#     "name": "Lucy",
-#     "photoUrls": [
-#         "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Blackcat-Lilith.jpg/220px-Blackcat-Lilith.jpg"
-#     ],
-#     "tags": [
-#         {
-#             "id": 0,
-#             "name": "black"
-#         }
-#     ],
-#     "status": "available"
-# }
+payload = {
+    "id": 9223372036854284571,
+    "category": {
+        "id": 0,
+        "name": "cat"
+    },
+    "name": "Lucy",
+    "photoUrls": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Blackcat-Lilith.jpg/220px-Blackcat-Lilith.jpg"
+    ],
+    "tags": [
+        {
+            "id": 0,
+            "name": "black"
+        }
+    ],
+    "status": "available"
+}
+@mark.temp
+def test_debug_me(app_config):
+    add_pet_url = app_config.base_url + post_pet_endpoint
+    res = requests.post(add_pet_url, json = payload)
+    response_json = res.json()
+    print(f'The url we called to: #{response_json["category__id"]}')
+    # txt = "category.pet.id"
+    # print(txt.split("."))
 
 
+@mark.petstore
+def test_env_is_petstore(app_config):
+    base_url = app_config.base_url
+    assert base_url == 'https://petstore.swagger.io/v2'
 
 @mark.petstore
 def test_add_pet(app_config):
@@ -39,8 +51,3 @@ def test_add_pet(app_config):
 
 
 
-
-    # add_pet_url = app_config.base_url + post_pet_endpoint
-    # res = requests.post(add_pet_url, json = payload)
-    # response_json = res.json()
-    # print(f'The url we called to: #{response_json["category.id"]}')

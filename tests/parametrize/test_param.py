@@ -17,7 +17,3 @@ def test_tv_series_showed(tv_series):
 def test_tv_series_showed_with_data(test_data):
     print(f"{test_data} will be shown on tv this week")
 
-#cross-browser tests
-# @mark.tvseries
-# def browser_test(browser):
-#     browser.get('https://google.com')
