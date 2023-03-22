@@ -1,53 +1,23 @@
+import logging as logger
 from pytest import mark
 from base.Base import *
-from endpoints.Petstore_Pet import Petstore_Pet
-import os
-import jsonpath as jsn
-import requests
-import json
-from jsonpath_ng import jsonpath, parse
+from endpoint_groups.Petstore_Pet import Petstore_Pet
+
 
 post_pet_endpoint = '/pet'
 json_file_path = 'jsons\\new_pet.json'
-payload = {
-    "id": 9223372036854284571,
-    "category": {
-        "id": 0,
-        "name": "cat"
-    },
-    "name": "Lucy",
-    "photoUrls": [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Blackcat-Lilith.jpg/220px-Blackcat-Lilith.jpg"
-    ],
-    "tags": [
-        {
-            "id": 0,
-            "name": "black"
-        }
-    ],
-    "status": "available"
-}
-@mark.temp
-def test_debug_me(app_config):
-    add_pet_url = app_config.base_url + post_pet_endpoint
-    res = requests.post(add_pet_url, json = payload)
-    response_json = res.json()
-    print(f'The url we called to: #{response_json["category__id"]}')
-    # txt = "category.pet.id"
-    # print(txt.split("."))
-
+headers = {'Content-Type': 'application/json'}
 
 @mark.petstore
 def test_env_is_petstore(app_config):
+    logger.info("TEST: Check the environment is correctly set.")
     base_url = app_config.base_url
     assert base_url == 'https://petstore.swagger.io/v2'
 
 @mark.petstore
 def test_add_pet(app_config):
+    logger.info("TEST: Add a new pet.")
     petstore_pet = Petstore_Pet()
     add_pet_url = app_config.base_url + post_pet_endpoint
-    res = petstore_pet.add_pet(add_pet_url, json_file_path)
-    print(f'The id of the newly added pet: #{res}')
-
-
-
+    res = petstore_pet.add_pet(add_pet_url, json_file_path, headers)
+    

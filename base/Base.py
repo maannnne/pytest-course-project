@@ -15,24 +15,69 @@ class Base:
     def post_request(self, url, json_file_path = None, headers = None): 
         request_json = self.load_json_file(json_file_path)
         response = requests.post(url, json = request_json, headers = headers, verify = False)
-        return response    
+        return response   
+
+    #PUT method
+
+    #PATCH method
+
+    #DELETE method 
 
     # additionals
     def load_json_file(self, json_file_path):
+        """
+        Loads the json file
+        prepares it as a payload
+            Params:
+                json_file_path: the file path of the json file, which should be loaded as a payload 
+        """
         with open(json_file_path, "r") as file:
             payload = json.load(file)
             return payload  
 
     def check_status_code(self, response, status_code):
+        """
+        Checks the status code
+            Params:
+                response: the response object
+                status_code: the expected status code
+        """
         assert response.status_code == status_code 
 
-    def get_response_key_value(self, response, key_name):
+    def get_response_key_value(self, response, key_json_path):
+        """
+        Gets a specific key's value from the response body and returns the value, using json path
+            Params:
+                response: the response object
+                key_json_path: the json path of the corresponsing key (e.g "category.id")
+        """
         response_json = response.json()
-        val = response_json[key_name]
-        return val
+        json_exp = parse(f'$.{key_json_path}')
+        match = json_exp.find(response_json)
+        return match[0].value
 
     def check_response_key_value(self, response, key_json_path, expected_value):
+        """
+        Checks a specific key's value from the response body, using json path
+            Params: 
+                response: the response object
+                key_json_path: the json path of the corresponding key (e.g "category.id")
+                expected_value: the expected value of the corresponding key
+        """
         response_json = response.json()
-        
-        actual_value = response_json[x]
-        assert actual_value == expected_value
+        json_exp = parse(f'$.{key_json_path}')
+        match = json_exp.find(response_json)
+        assert match[0].value == expected_value
+
+    def change_response_key_value(self, response, key_json_path, changed_value):
+        """
+        Changes a specific key's value, using json path
+            Params: 
+                response: the response object
+                key_json_path: the json path of the corresponding key (e.g "")
+
+        """
+        response_json = response.json()
+        json_exp = parse(f'$.{key_json_path}')
+        match = json_exp.find(response_json)
+        #TODO: finish this by adding a logic of changing the value
