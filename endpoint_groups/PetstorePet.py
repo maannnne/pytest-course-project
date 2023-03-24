@@ -2,7 +2,7 @@ from base.Base import Base
 import logging as logger
 
 
-class Petstore_Pet(Base):
+class PetstorePet(Base):
 
     def add_pet(self, url, json_file_path, headers = None):
         response = self.post_request(url, json_file_path, headers)
@@ -22,3 +22,6 @@ class Petstore_Pet(Base):
         self.check_status_code(response, 200)
         logger.debug(f'Pets by status: {response.json()}')
         return response.json()
+
+    def edit_POST_pet_endpoint_payload(self, json_file_path, key_path, new_value):
+        self.edit_request_key_value(json_file_path, key_path, new_value)

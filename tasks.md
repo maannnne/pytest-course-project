@@ -10,4 +10,5 @@
 - ~~Create a seyup.py file to install all the requirements on the current enc ```python setup.py install```~~
 - Create a scenario of post/get/put/delete pet
 - Integrate response models
-- Implement a method to change json key values
+- ~~Implement a method to change json key values~~
+- ~~Python naming conventions~~

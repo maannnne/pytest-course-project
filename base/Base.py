@@ -69,15 +69,23 @@ class Base:
         match = json_exp.find(response_json)
         assert match[0].value == expected_value
 
-    def change_response_key_value(self, response, key_json_path, changed_value):
+    def edit_request_key_value(self, json_file_path, key_json_path, changed_value):
         """
         Changes a specific key's value, using json path
             Params: 
-                response: the response object
-                key_json_path: the json path of the corresponding key (e.g "")
+                json_file_path: the response object
+                key_json_path: the json path of the corresponding key (e.g "category.id")
+                changed_value: the value you want the corresponding key to have
 
         """
-        response_json = response.json()
+        request_json = self.load_json_file(json_file_path)
+
         json_exp = parse(f'$.{key_json_path}')
-        match = json_exp.find(response_json)
-        #TODO: finish this by adding a logic of changing the value
+        match = json_exp.find(request_json)
+        match[0].value = changed_value
+        json_exp.update(request_json, match[0].value)
+
+        with open(json_file_path, "w") as file:
+            json.dump(request_json, file)
+
+        #TODO: finish this by modifying the original json file
