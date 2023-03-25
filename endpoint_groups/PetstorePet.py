@@ -7,8 +7,14 @@ class PetstorePet(Base):
     def add_pet(self, url, json_file_path, headers = None):
         response = self.post_request(url, json_file_path, headers)
         self.check_status_code(response, 200)
-        id = self.get_response_key_value(response, "category.name")
+        #id = self.get_response_key_value(response, "category.name")
         logger.debug(f'Pet added: {response.json()}')
+        return response.json()
+
+    def edit_pet(self, url, json_file_path, headers = None):
+        response = self.put_request(url, json_file_path, headers)
+        self.check_status_code(response, 200)
+        logger.debug(f'Pet edited: {response.json()}')
         return response.json()
 
     def get_pet_by_id(self, url, params = None, headers = None):
@@ -24,4 +30,7 @@ class PetstorePet(Base):
         return response.json()
 
     def edit_POST_pet_endpoint_payload(self, json_file_path, key_path, new_value):
+        self.edit_request_key_value(json_file_path, key_path, new_value)
+
+    def edit_PUT_pet_endpoint_payload(self, json_file_path, key_path, new_value):
         self.edit_request_key_value(json_file_path, key_path, new_value)

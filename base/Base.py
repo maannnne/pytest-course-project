@@ -18,10 +18,19 @@ class Base:
         return response   
 
     #PUT method
+    def put_request(self, url, json_file_path, headers = None):
+        request_json = self.load_json_file(json_file_path)
+        response = requests.put(url, data = request_json, headers = headers, verify = False)
 
     #PATCH method
+    def patch_request(self, url, json_file_path, headers = None):
+        request_json = self.load_json_file(json_file_path)
+        response = requests.patch(url, data = request_json, headers = headers, verify = False)
 
     #DELETE method 
+    def delete_request(self, url, headers = None):
+        response = requests.delete(url, headers = headers, verify = False)
+        return response
 
     # additionals
     def load_json_file(self, json_file_path):
@@ -88,4 +97,3 @@ class Base:
         with open(json_file_path, "w") as file:
             json.dump(request_json, file)
 
-        #TODO: finish this by modifying the original json file
