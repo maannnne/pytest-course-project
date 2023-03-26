@@ -20,12 +20,14 @@ class Base:
     #PUT method
     def put_request(self, url, json_file_path, headers = None):
         request_json = self.load_json_file(json_file_path)
-        response = requests.put(url, data = request_json, headers = headers, verify = False)
+        response = requests.put(url, json = request_json, headers = headers, verify = False)
+        return response
 
     #PATCH method
     def patch_request(self, url, json_file_path, headers = None):
         request_json = self.load_json_file(json_file_path)
-        response = requests.patch(url, data = request_json, headers = headers, verify = False)
+        response = requests.patch(url, json = request_json, headers = headers, verify = False)
+        return response
 
     #DELETE method 
     def delete_request(self, url, headers = None):

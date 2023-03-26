@@ -6,8 +6,10 @@ from endpoint_groups.PetstorePet import PetstorePet
 
 post_pet_endpoint = "/pet"
 put_pet_endpoint = "/pet"
-new_pet_payload = "jsons\\new_pet.json"
-edit_pet_payload = "jsons\\edit_pet.json"
+patch_pet_endpoint = "/pet"
+new_pet_payload = "jsons/new_pet.json"
+patch_pet_payload = "jsons/edit_pet_patch.json"
+put_pet_payload = "jsons/edit_pet_put.json"
 headers = {'Content-Type': 'application/json'}
 pet = PetstorePet()
 base = Base()
@@ -26,11 +28,13 @@ def test_add_pet(app_config):
     add_pet_url = app_config.base_url + post_pet_endpoint
     pet.edit_POST_pet_endpoint_payload(new_pet_payload, "category.name", "dog")
     res = pet.add_pet(add_pet_url, new_pet_payload, headers)
-    logger.debug(f"TEST RESULT: Newly added pet: {res}")
+    pet_id = PetstorePet.get_key_value_from_response(res, "id")
+    logger.debug(f"TEST RESULT: Newly added pet: {pet_id}")
 
 @mark.petstore
-def test_edit_pet(app_config):
-    logger.info("TEST STEP: Edit created pet")
+def test_edit_pet_put(app_config):
+    logger.info("TEST STEP: Edit created pet with put")
     edit_pet_url = app_config.base_url + put_pet_endpoint
-    pet.edit_PUT_pet_endpoint_payload(edit_pet_payload, "category.name", "utyutyu")
-    res = pet.edit_pet(edit_pet_url, edit_pet_payload, headers)
+    pet.edit_PUT_pet_endpoint_payload(put_pet_payload, "category.name", "utyutyu")
+    res = pet.edit_pet_put(edit_pet_url, put_pet_payload, headers)
+

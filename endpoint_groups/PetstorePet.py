@@ -11,10 +11,16 @@ class PetstorePet(Base):
         logger.debug(f'Pet added: {response.json()}')
         return response.json()
 
-    def edit_pet(self, url, json_file_path, headers = None):
+    def edit_pet_put(self, url, json_file_path, headers = None):
         response = self.put_request(url, json_file_path, headers)
         self.check_status_code(response, 200)
-        logger.debug(f'Pet edited: {response.json()}')
+        logger.debug(f'Pet edited with put: {response.json()}')
+        return response.json()
+    
+    def edit_pet_patch(self, url, json_file_path, headers = None):
+        response = self.patch_request(url, json_file_path, headers)
+        self.check_status_code(response, 200)
+        logger.debug(f'Pet edited with patch: {response.json()}')
         return response.json()
 
     def get_pet_by_id(self, url, params = None, headers = None):
@@ -28,9 +34,16 @@ class PetstorePet(Base):
         self.check_status_code(response, 200)
         logger.debug(f'Pets by status: {response.json()}')
         return response.json()
+    
+    def get_key_value_from_response(self, response, key_path):
+        key_value = self.get_response_key_value(response, key_path)
+        return key_value
 
     def edit_POST_pet_endpoint_payload(self, json_file_path, key_path, new_value):
         self.edit_request_key_value(json_file_path, key_path, new_value)
 
     def edit_PUT_pet_endpoint_payload(self, json_file_path, key_path, new_value):
+        self.edit_request_key_value(json_file_path, key_path, new_value)
+
+    def edit_PATCH_pet_endpoint_payload(self, json_file_path, key_path, new_value):
         self.edit_request_key_value(json_file_path, key_path, new_value)
