@@ -12,3 +12,4 @@
 - ~~Python naming conventions~~
 - Integrate response models
 - Create a scenario of post/get/put/delete pet
+- Add teardown fucntions to clean up after tests

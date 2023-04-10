@@ -18,7 +18,7 @@ class PetstorePet(Base):
         #logger.debug(f'Pet added: {response.json()}')
         return response.json()
 
-    def edit_pet_put(self, url, json_file_path, headers = None):
+    def edit_pet(self, url, json_file_path, headers = None):
         """
         Edits the pet
             Params:
@@ -29,6 +29,18 @@ class PetstorePet(Base):
         response = self.put_request(url, json_file_path, headers)
         self.check_status_code(response, 200)
         #logger.debug(f'Pet edited with put: {response.json()}')
+        return response.json()
+
+    def remove_pet(self, url, pet_id, headers = None):
+        """
+        Deletes the pet:
+            Params:
+                url - string: the url for removing the pet,
+                pet_id - int: the id of the pet to be deleted,
+                headers(optional) - dict: request headers   
+        """
+        response = self.delete_request(url + "/" + pet_id, headers)
+        self.check_status_code(response, 200)
         return response.json()
 
 
@@ -46,6 +58,7 @@ class PetstorePet(Base):
         #logger.debug(f'Pet info: {response.json()}')
         return response.json()
 
+
     def get_pets_by_status(self, url, params, headers = None):
         """
         Gets the pet by status
@@ -58,46 +71,3 @@ class PetstorePet(Base):
         self.check_status_code(response, 200)
         #logger.debug(f'Pets by status: {response.json()}')
         return response.json()
-
-
-    # GET DATA FROM RESPONSE
-    def get_key_value_from_response(self, response, key_path):
-        """
-        Gets the value of the specified key
-            Params:
-                response - dict: the response of the request
-                key_path - string: the corresponding key
-        """
-        return self.get_response_key_value(response, key_path)
-
-
-    # PAYLOAD
-    def edit_POST_pet_endpoint_payload(self, json_file_path, key_path, new_value):
-        """
-        Changes key values for the specified request payload:
-            Params:
-                json_file_path - dict: the path of the json, that should be used as a payload
-                key_path - string: the corresponding key path
-                new_value - string: the new value of the corresponding key
-        """
-        self.edit_request_key_value(json_file_path, key_path, new_value)
-
-    def edit_PUT_pet_endpoint_payload(self, json_file_path, key_path, new_value):
-        """
-        Changes key values for the specified request payload:
-            Params:
-                json_file_path - dict: the path of the json, that should be used as a payload
-                key_path - string: the corresponding key path
-                new_value - string: the new value of the corresponding key
-        """
-        self.edit_request_key_value(json_file_path, key_path, new_value)
-
-    def edit_PATCH_pet_endpoint_payload(self, json_file_path, key_path, new_value):
-        """
-        Changes key values for the specified request payload:
-            Params:
-                json_file_path - dict: the path of the json, that should be used as a payload
-                key_path - string: the corresponding key path
-                new_value - string: the new value of the corresponding key
-        """
-        self.edit_request_key_value(json_file_path, key_path, new_value)
