@@ -11,5 +11,6 @@
 - ~~Implement a method to change json key values~~
 - ~~Python naming conventions~~
 - Integrate response models
-- Create a scenario of post/get/put/delete pet
+- ~~Create a scenario of post/get/put/delete pet~~
 - Add teardown fucntions to clean up after tests
+- Implement getting the test data from a separate file
